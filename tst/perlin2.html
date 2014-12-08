@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="perlin2.js"></script>
+		<script>
+			var p = new Perlin(424242);
+		</script>
+		<style>
+			canvas{
+				border: solid #F00 1px;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="noise2d" width="400px" height="400px"></canvas>
+		<script>
+			var canvas = document.getElementById("noise2d");
+			canvas =  canvas.getContext("2d");
+			for(var x = 0; x < 400; x++)
+				for(var y = 0; y < 400; y++){
+					//canvas.fillStyle = "rgba(0,0,0,"+(0.5+p.newnoise(x,y)*0.5)+")";
+					canvas.fillStyle = "rgba(0,0,0,"+(p.notnoise(x,y))+")";
+					canvas.fillRect(x,y,1,1);
+				}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="perlin1.js"></script>
+	</head>
+	<body>
+		<h2>noise</h2>
+		<canvas id="canvasNoise" style="border: solid #F00 2px" width="400px" height="400px"></canvas>
+		<script>
+			var c = document.getElementById("canvasNoise");
+			var ctx = c.getContext("2d");
+			var p = new Perlin(424242);
+			for(var i = 0; i<400; i++)
+				ctx.fillRect(i,200+p.noise(i)*200,1,1);
+		</script>
+		<h2>smoothnoise</h2>
+		<canvas id="canvasSmoothNoise" style="border: solid #F00 2px" width="400px" height="400px"></canvas>
+		<script>
+			var c = document.getElementById("canvasSmoothNoise");
+			var ctx = c.getContext("2d");
+			for(var i = 0; i<400; i++)
+				ctx.fillRect(i,200+p.smoothNoise(i)*200,1,1);
+		</script>
+		<h2>perlinnoise</h2>
+		<canvas id="pNoise" style="border: solid #F00 2px" width="400px" height="400px"></canvas>
+		<script>
+			var c = document.getElementById("pNoise");
+			var ctx = c.getContext("2d");
+			for(var i = 0; i<1600; i++){
+				var eee = 200+p.perlin(i/40,0.0001,1)*200;
+				ctx.fillRect(i/4,eee,1,1);
+			}
+		</script>
+		<h2>linearinterpolatednoise</h2>
+		<canvas id="liNoise" style="border: solid #F00 2px" width="400px" height="400px"></canvas>
+		<script>
+			var c = document.getElementById("liNoise");
+			var ctx = c.getContext("2d");
+			for(var i = 0; i<1600; i++){
+				var eee = 200+p.linearInterpNoise(i/40)*200;
+				ctx.fillRect(i/4,eee,1,1);
+			}
+		</script>
+		<h2>cosineinterpolatednoise</h2>
+		<canvas id="ciNoise" style="border: solid #F00 2px" width="400px" height="400px"></canvas>
+		<script>
+			var c = document.getElementById("ciNoise");
+			var ctx = c.getContext("2d");
+			for(var i = 0; i<1600; i++){
+				var eee = 200+p.cosineInterpNoise(i/40)*200;
+				ctx.fillRect(i/4,eee,1,1);
+			}
+		</script>
+		<h2>cubicinterpolatednoise</h2>
+		<canvas id="cuiNoise" style="border: solid #F00 2px" width="400px" height="400px"></canvas>
+		<script>
+			var c = document.getElementById("cuiNoise");
+			var ctx = c.getContext("2d");
+			for(var i = 0; i<1600; i++){
+				var eee = 200+p.cubicInterpNoise(i/40)*200;
+				ctx.fillRect(i/4,eee,1,1);
+			}
+		</script>
+	</body>
+</html>
