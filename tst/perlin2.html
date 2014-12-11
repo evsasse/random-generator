@@ -3,7 +3,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script src="perlin2.js"></script>
 		<script>
-			var p = new Perlin(424242);
+			var p = new Perlin(0);
 		</script>
 		<style>
 			canvas{
@@ -12,16 +12,100 @@
 		</style>
 	</head>
 	<body>
+		<h2>noise2d</h2>
 		<canvas id="noise2d" width="400px" height="400px"></canvas>
 		<script>
 			var canvas = document.getElementById("noise2d");
 			canvas =  canvas.getContext("2d");
+			var max = 0; var maior = 0;
+			var min = 0; var menor = 0;
 			for(var x = 0; x < 400; x++)
 				for(var y = 0; y < 400; y++){
-					//canvas.fillStyle = "rgba(0,0,0,"+(0.5+p.newnoise(x,y)*0.5)+")";
-					canvas.fillStyle = "rgba(0,0,0,"+(p.notnoise(x,y))+")";
+					var eee = p.noise(x,y);
+					if(eee > max) max = eee;
+					if(eee < min) min = eee;
+					if(eee > 0) maior++;
+					if(eee < 0) menor++;
+					canvas.fillStyle = "rgba(0,0,0,"+(0.5+eee*0.5)+")";
+					//canvas.fillStyle = "rgba(0,0,0,"+(p.notnoise(x,y))+")";
 					canvas.fillRect(x,y,1,1);
 				}
+			console.log('max',max);
+			console.log('min',min);
+			console.log('maior',maior);
+			console.log('menor',menor);
+		</script>
+		<h2>smoothnoise2d</h2>
+		<canvas id="smoothnoise2d" width="400px" height="400px"></canvas>
+		<script>
+			var startTime = new Date();
+			var canvas = document.getElementById("smoothnoise2d");
+			canvas =  canvas.getContext("2d");
+			var max = 0; var maior = 0;
+			var min = 0; var menor = 0;
+			for(var x = 0; x < 400; x++)
+				for(var y = 0; y < 400; y++){
+					var eee = p.smoothnoise(x,y);
+					if(eee > max) max = eee;
+					if(eee < min) min = eee;
+					if(eee > 0) maior++;
+					if(eee < 0) menor++;
+					canvas.fillStyle = "rgba(0,0,0,"+(0.5+eee*0.5)+")";
+					//canvas.fillStyle = "rgba(0,0,0,"+(p.notnoise(x,y))+")";
+					canvas.fillRect(x,y,1,1);
+				}
+			console.log('max',max);
+			console.log('min',min);
+			console.log('maior',maior);
+			console.log('menor',menor);
+		</script>
+		<h2>linearinterpsmoothnoise2d</h2>
+		<canvas id="lismoothnoise2d" width="400px" height="400px"></canvas>
+		<script>
+			var startTime = new Date();
+			var canvas = document.getElementById("lismoothnoise2d");
+			canvas =  canvas.getContext("2d");
+			var max = 0; var maior = 0;
+			var min = 0; var menor = 0;
+			for(var x = 0; x < 400; x++)
+				for(var y = 0; y < 400; y++){
+					var eee = p.linearInterpSmoothNoise(x/10,y/10);
+					if(eee > max) max = eee;
+					if(eee < min) min = eee;
+					if(eee > 0) maior++;
+					if(eee < 0) menor++;
+					canvas.fillStyle = "rgba(0,0,0,"+(0.5+eee*0.5)+")";
+					canvas.fillRect(x,y,1,1);
+				}
+			console.log('max',max);
+			console.log('min',min);
+			console.log('maior',maior);
+			console.log('menor',menor);
+			console.log('elapsedTime',new Date() - startTime);
+		</script>
+		<h2>linearinterpsmoothnoise2d</h2>
+		<canvas id="cismoothnoise2d" width="400px" height="400px"></canvas>
+		<script>
+			var startTime = new Date();
+			var canvas = document.getElementById("cismoothnoise2d");
+			canvas =  canvas.getContext("2d");
+			var max = 0; var maior = 0;
+			var min = 0; var menor = 0;
+			for(var x = 0; x < 400; x++)
+				for(var y = 0; y < 400; y++){
+					var eee = p.cosineInterpSmoothNoise(x/10,y/10);
+					if(eee > max) max = eee;
+					if(eee < min) min = eee;
+					if(eee > 0) maior++;
+					if(eee < 0) menor++;
+					canvas.fillStyle = "rgba(0,0,0,"+(0.5+eee*0.5)+")";
+					canvas.fillRect(x,y,1,1);
+				}
+			console.log('max',max);
+			console.log('min',min);
+			console.log('maior',maior);
+			console.log('menor',menor);
+			console.log('elapsedTime',new Date() - startTime);
 		</script>
 	</body>
 </html>
