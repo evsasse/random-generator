@@ -86,5 +86,45 @@ Perlin.prototype = {
 		var d = this.smoothnoise(x+1,y+1)*(_x)*(_y);
 
 		return a+b+c+d;
+	},
+	cubicInterpolation: function(x,_x){
+		var p = (x[3] - x[2]) - (x[0] - x[1]);
+		var q = (x[0] - x[1]) - p;
+		var r = x[2] - x[0];
+		var s = x[1];
+		return p*Math.pow(_x,3) + q*Math.pow(_x,2) + r*_x + s;
+	},
+	bicubicInterpolation: function(xy,_x,_y){
+		var arr = [];
+		arr[0] = this.cubicInterpolation(xy[0],_x);
+		arr[1] = this.cubicInterpolation(xy[1],_x);
+		arr[2] = this.cubicInterpolation(xy[2],_x);
+		arr[3] = this.cubicInterpolation(xy[3],_x);
+		return this.cubicInterpolation(arr,_y);
+	},
+	cubicInterpSmoothNoise: function(x,y){
+		var _x = x%1;
+		var _y = y%1;
+
+		x = x-_x;
+		y = y-_y;
+
+		var xy = [];
+		xy[0] = [this.smoothnoise(x-1,y-1),this.smoothnoise(x,y-1),this.smoothnoise(x+1,y-1),this.smoothnoise(x+2,y-1)];
+		xy[1] = [this.smoothnoise(x-1,y),this.smoothnoise(x,y),this.smoothnoise(x+1,y),this.smoothnoise(x+2,y)];
+		xy[2] = [this.smoothnoise(x-1,y+1),this.smoothnoise(x,y+1),this.smoothnoise(x+1,y+1),this.smoothnoise(x+2,y+1)];
+		xy[3] = [this.smoothnoise(x-1,y+2),this.smoothnoise(x,y+2),this.smoothnoise(x+1,y+2),this.smoothnoise(x+2,y+2)];
+
+		//console.log(xy);
+
+		return this.bicubicInterpolation(xy,_x,_y);
+	},
+	finalnoise: function(x,y){
+		var total = this.linearInterpSmoothNoise(x,y);
+		total += this.linearInterpSmoothNoise(x/2,y/2)*2;
+		total += this.linearInterpSmoothNoise(x/4,y/4)*4;
+		total += this.linearInterpSmoothNoise(x/8,y/8)*8;
+		total += this.linearInterpSmoothNoise(x/16,y/16)*16;
+		return total/15;
 	}
 }

@@ -1,0 +1,78 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="noise.js"></script>
+	</head>
+	<body>
+		<canvas id="teste" height="520px" width="500px"></canvas>
+		<script>
+
+			var canvas = document.getElementById('teste');
+			canvas = canvas.getContext('2d');
+
+			var n = new Noise(1);
+
+			var moreThan0 = 0;
+			var lessThan0 = 0;
+			var equals0 = 0;
+			var max = 0;
+			var min = 0;
+
+			var startTime = new Date();
+			for(var x = 0; x < 500; x++){
+				var r = n.perlin_noise1(x);
+				canvas.fillStyle = 'rgba(0,0,0,'+(0.5+r*0.5)+')';
+				canvas.fillRect(x,500,1,20);
+				canvas.fillStyle = 'rgba(255,0,0,1)';
+				canvas.fillRect(x,r*250 + 250,5,5);
+				if(r > 0)
+					moreThan0++;
+				else if(r < 0)
+					lessThan0++;
+				else
+					equals0++;
+				if(r > max) max = r;
+				else if (r < min) min = r;
+				if(x%1000 == 0)console.log(x,r);
+			}
+			console.log('noise1')
+			console.log('timeSpent',new Date() - startTime);
+			console.log('moreThan0', moreThan0);
+			console.log('lessThan0', lessThan0);
+			console.log('equals0', equals0);
+			console.log('max', max);
+			console.log('min', min);
+
+			var moreThan0 = 0;
+			var lessThan0 = 0;
+			var equals0 = 0;
+			var max = 0;
+			var min = 0;
+
+			var startTime = new Date();
+
+			for(var y = 0; y < 500; y++)
+			for(var x = 0; x < 500; x++){
+				var r = n.perlin_noise2(x,y);
+				canvas.fillStyle = 'rgba(0,0,0,'+(0.5+r*0.5)+')';
+				canvas.fillRect(x,y,1,1);
+				if(r > 0)
+					moreThan0++;
+				else if(r < 0)
+					lessThan0++;
+				else
+					equals0++;
+				if(r > max) max = r;
+				else if (r < min) min = r;
+				if((x+y)%10000 == 0)console.log(x,y,r);
+			}
+			console.log('noise2');
+			console.log('timeSpent',new Date() - startTime);
+			console.log('moreThan0', moreThan0);
+			console.log('lessThan0', lessThan0);
+			console.log('equals0', equals0);
+			console.log('max', max);
+			console.log('min', min);
+		</script>
+	</body>
+</html>
